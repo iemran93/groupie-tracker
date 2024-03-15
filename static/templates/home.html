@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/styles.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <title>Home Page</title>
+</head>
+
+<body>
+    <div>
+        {{template "nav" .}}
+    </div>
+
+    <div class="header">
+        <h1>Groupie Tracker</h1>
+    </div>
+
+    <div class="search">
+        <div>
+            <input class="myInput icon" type="text" placeholder="Search" name="q" hx-get="/search"
+                hx-trigger="keyup changed delay=500ms" hx-target="#results">
+        </div>
+        <div id="results">
+            <!-- search results search.html-->
+        </div>
+    </div>
+
+    <div class="flexbox-container">
+        {{range .}}
+        <div class="flexbox-item">
+            <p class="title">{{ .Name }}</p>
+            <a href="/artist?id={{ .Id }}"><img src="{{ .Image }}"></a>
+            <p class="title title1">Established: {{ .CrDate }}</p>
+            <p class="title title1">First Album: {{ .FstAlbum }}</p>
+            <br><br>
+        </div>
+        {{ end }}
+    </div>
+</body>
+
+</html>

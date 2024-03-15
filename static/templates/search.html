@@ -1,0 +1,7 @@
+<div class="results-s">
+    {{ range .}}
+    <a href="/artist?id={{.Link}}">
+        <h1>{{.Param}}, {{.Type}}</h1>
+    </a>
+    {{ end }}
+</div>
