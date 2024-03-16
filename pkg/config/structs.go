@@ -8,14 +8,15 @@ type Response struct {
 }
 
 type Artist struct {
-	Id        int
-	Image     string
-	Name      string
-	CrDate    int    `json:"creationDate"`
-	FstAlbum  string `json:"firstAlbum"`
-	Members   []string
-	RelLink   string `json:"Relations"`
-	Relations RelationsData
+	Id          int
+	Image       string
+	Name        string
+	CrDate      int    `json:"creationDate"`
+	FstAlbum    string `json:"firstAlbum"`
+	Members     []string
+	RelLink     string `json:"Relations"`
+	Relations   RelationsData
+	Coordinates [][2]float64
 }
 
 type RelationsData struct {
@@ -35,4 +36,15 @@ type ArtistSe struct {
 	Param string
 	Type  string
 	Link  int
+}
+
+type Result struct {
+	Results []struct {
+		Geometry struct {
+			Location struct {
+				Lat float64 `json:"lat"`
+				Lng float64 `json:"lng"`
+			} `json:"location"`
+		}
+	}
 }

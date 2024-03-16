@@ -8,6 +8,7 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 var artists []config.Artist
@@ -90,6 +91,28 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Assign the relations to the artist
 	artistInfo.Relations = relations
+
+	// Get geocoding
+	var urlLocations []string
+	for location := range artistInfo.Relations.DatesLocations {
+		location = strings.ReplaceAll(location, "_", "%20")
+		location = strings.ReplaceAll(location, "-", "%20")
+		urlLocations = append(urlLocations, location)
+	}
+
+	var coordinates [][2]float64
+	for _, urlLocation := range urlLocations {
+		geoURL := fmt.Sprintf("https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4", urlLocation)
+		geoRes := functions.GetResponse(geoURL)
+		var result config.Result
+		json.Unmarshal(geoRes, &result)
+		latitude := result.Results[0].Geometry.Location.Lat
+		longitude := result.Results[0].Geometry.Location.Lng
+		latLong := [2]float64{latitude, longitude}
+		coordinates = append(coordinates, latLong)
+	}
+
+	artistInfo.Coordinates = coordinates
 
 	// Execute the artist HTML
 	t, err := template.ParseFiles("./static/templates/artist.html", "./static/templates/base.html")

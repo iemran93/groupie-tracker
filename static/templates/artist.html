@@ -63,7 +63,54 @@
                 </div>
             </div>
         </div>
+        <!-- map -->
+        <div id="map" style="width: 100%; height: 500px; background-color: gray;">
+        </div>
     </div>
+
+    <!-- map script -->
+    <script>
+        function initMap() {
+            let center = { lat: -10.2, lng: 151.25 };
+            let map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 2, center: center }
+            );
+            var coordinatesStr = "{{.Coordinates}}"
+            coordinates = parseCoordinates(coordinatesStr)
+            for (i = 0; i < coordinates.length; i++) {
+                let marker = new google.maps.Marker(
+                    { position: new google.maps.LatLng(coordinates[i][0], coordinates[i][1]), map: map }
+                );
+            }
+        }
+
+        function parseCoordinates(coordinatesString) {
+            // Regular expression to match numbers (floats)
+            var regex = /-?\d+\.\d+/g;
+            // Extract numeric values from the string using the regular expression
+            var numericValues = coordinatesString.match(regex);
+
+            // Initialize an array to store the parsed coordinates
+            var coordinates = [];
+
+            // Iterate over numeric values (two at a time for lat and lng)
+            for (var i = 0; i < numericValues.length; i += 2) {
+                // Parse latitude and longitude as floats and push to coordinates array
+                var latitude = parseFloat(numericValues[i]);
+                var longitude = parseFloat(numericValues[i + 1]);
+                if (!isNaN(latitude) && !isNaN(longitude)) {
+                    coordinates.push([latitude, longitude]);
+                }
+            }
+
+            return coordinates;
+        }
+    </script>
+    <!-- Loading the Maps JavaScript API -->
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4&loading=async&callback=initMap">
+        </script>
+
 </body>
 
 </html>
