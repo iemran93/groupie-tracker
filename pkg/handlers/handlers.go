@@ -14,23 +14,13 @@ import (
 var artists []config.Artist
 var concerts config.Concerts
 
+// Set the variables(artists, concerts) from the main
+func SetData(ar *[]config.Artist, co *config.Concerts) {
+	artists = *ar
+	concerts = *co
+}
+
 func Handler(w http.ResponseWriter, r *http.Request) {
-	// Check if the data is fetched
-	if len(artists) == 0 {
-		// Pull the response data
-		mainRes := functions.GetResponse("https://groupietrackers.herokuapp.com/api")
-		var response config.Response // Response instance
-		json.Unmarshal(mainRes, &response)
-
-		// Pull artists data
-		artistRes := functions.GetResponse(response.Artists)
-		json.Unmarshal([]byte(artistRes), &artists)
-
-		// Pull locations(concerts)
-		concertRes := functions.GetResponse("https://groupietrackers.herokuapp.com/api/locations")
-		json.Unmarshal(concertRes, &concerts)
-	}
-
 	// Parse home HTML
 	t, err := template.ParseFiles("./static/templates/home.html", "./static/templates/base.html")
 	if err != nil {
@@ -51,22 +41,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ArtistHandler(w http.ResponseWriter, r *http.Request) {
-	// Check if the data is fetched
-	if len(artists) == 0 {
-		// Pull the response data
-		mainRes := functions.GetResponse("https://groupietrackers.herokuapp.com/api")
-		var response config.Response // Response instance
-		json.Unmarshal(mainRes, &response)
-
-		// Pull artists data
-		artistRes := functions.GetResponse(response.Artists)
-		json.Unmarshal([]byte(artistRes), &artists)
-
-		// Pull locations(concerts)
-		concertRes := functions.GetResponse("https://groupietrackers.herokuapp.com/api/locations")
-		json.Unmarshal(concertRes, &concerts)
-	}
-
 	// Get the artist id
 	artistId := r.URL.Query().Get("id")
 
