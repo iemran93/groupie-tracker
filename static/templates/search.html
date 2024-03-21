@@ -1,7 +1,32 @@
 <div class="results-s">
-    {{ range .}}
+    {{ range .Artist }}
     <a href="/artist?id={{.Link}}">
-        <h1>{{.Param}}, {{.Type}}</h1>
+        <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+    </a>
+    {{ end }}
+    {{ range .Band }}
+    <a href="/artist?id={{.Link}}">
+        <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+    </a>
+    {{ end }}
+    {{ range .Member }}
+    <a href="/artist?id={{.Link}}">
+        <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+    </a>
+    {{ end }}
+    {{ range .EDate }}
+    <a href="/artist?id={{.Link}}">
+        <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+    </a>
+    {{ end }}
+    {{ range .FDate }}
+    <a href="/artist?id={{.Link}}">
+        <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+    </a>
+    {{ end }}
+    {{ range .Concert }}
+    <a href="/artist?id={{.Link}}">
+        <h1>{{.Param}}, <span>{{.Type}}</span></h1>
     </a>
     {{ end }}
 </div>

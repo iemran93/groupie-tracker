@@ -78,7 +78,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	for _, urlLocation := range urlLocations {
 		geoURL := fmt.Sprintf("https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4", urlLocation)
 		geoRes := functions.GetResponse(geoURL)
-		var result config.Result
+		var result config.ResultG
 		json.Unmarshal(geoRes, &result)
 		latitude := result.Results[0].Geometry.Location.Lat
 		longitude := result.Results[0].Geometry.Location.Lng
@@ -103,7 +103,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	searchParam := r.URL.Query().Get("q")
 
 	// Filter the artist based on the search param
-	var result []config.ArtistSe
+	var result config.Result
 	if len(searchParam) >= 1 {
 		result = functions.GetResult(artists, concerts, searchParam)
 	}

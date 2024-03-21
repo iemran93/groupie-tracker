@@ -39,6 +39,15 @@ type ArtistSe struct {
 }
 
 type Result struct {
+	Artist  []ArtistSe
+	Band    []ArtistSe
+	Member  []ArtistSe
+	EDate   []ArtistSe
+	FDate   []ArtistSe
+	Concert []ArtistSe
+}
+
+type ResultG struct {
 	Results []struct {
 		Geometry struct {
 			Location struct {
