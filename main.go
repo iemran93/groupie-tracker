@@ -7,11 +7,13 @@ import (
 	"groupieFunc/pkg/functions"
 	"groupieFunc/pkg/handlers"
 	"net/http"
+	"os"
 )
 
 // Global variables
 var GROUPIE_API = "https://groupietrackers.herokuapp.com/api"
 var GROUPIE_LOCATIONS_API = "https://groupietrackers.herokuapp.com/api/locations"
+var PORT = os.Getenv("PORT")
 
 func main() {
 	// Pull the response data
@@ -43,5 +45,5 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// Port init
-	http.ListenAndServe(":8000", nil)
+	http.ListenAndServe(PORT, nil)
 }
