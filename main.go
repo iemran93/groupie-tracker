@@ -9,9 +9,13 @@ import (
 	"net/http"
 )
 
+// Global variables
+var GROUPIE_API = "https://groupietrackers.herokuapp.com/api"
+var GROUPIE_LOCATIONS_API = "https://groupietrackers.herokuapp.com/api/locations"
+
 func main() {
 	// Pull the response data
-	mainRes := functions.GetResponse("https://groupietrackers.herokuapp.com/api")
+	mainRes := functions.GetResponse(GROUPIE_API)
 	var response config.Response // Response instance
 	json.Unmarshal(mainRes, &response)
 
@@ -22,7 +26,7 @@ func main() {
 
 	// Pull locations(concerts)
 	var concerts config.Concerts
-	concertRes := functions.GetResponse("https://groupietrackers.herokuapp.com/api/locations")
+	concertRes := functions.GetResponse(GROUPIE_LOCATIONS_API)
 	json.Unmarshal(concertRes, &concerts)
 
 	handlers.SetData(&artists, &concerts)

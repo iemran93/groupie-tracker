@@ -11,6 +11,7 @@ import (
 	"strings"
 )
 
+var GOOGLE_API_KEY = "AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4"
 var artists []config.Artist
 var concerts config.Concerts
 
@@ -76,7 +77,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	var coordinates [][2]float64
 	for _, urlLocation := range urlLocations {
-		geoURL := fmt.Sprintf("https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4", urlLocation)
+		geoURL := fmt.Sprintf("https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=%s", urlLocation, GOOGLE_API_KEY)
 		geoRes := functions.GetResponse(geoURL)
 		var result config.Result
 		json.Unmarshal(geoRes, &result)
