@@ -1,1 +1,1 @@
-web: go run main.go
+web: groupie-tracker-search-bar-geolocalization
