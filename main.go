@@ -34,7 +34,7 @@ func main() {
 	handlers.SetData(&artists, &concerts)
 
 	// Hello msg
-	fmt.Print("\nHi, go to http://localhost:8000/ to view the site!\n")
+	fmt.Print(fmt.Sprintf("\nHi, go to http://localhost:8000/ %s to view the site!\n", PORT))
 
 	// Handlers
 	http.HandleFunc("/", handlers.Handler)
