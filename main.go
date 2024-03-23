@@ -34,7 +34,7 @@ func main() {
 	handlers.SetData(&artists, &concerts)
 
 	// Hello msg
-	fmt.Print(fmt.Sprintf("\nHi, go to http://localhost:8000/ %s to view the site!\n", PORT))
+	fmt.Printf("\nHi, go to http://localhost:8000/ %s to view the site!\n", PORT)
 
 	// Handlers
 	http.HandleFunc("/", handlers.Handler)
@@ -45,5 +45,5 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// Port init
-	http.ListenAndServe(PORT, nil)
+	http.ListenAndServe(fmt.Sprintf(":%s", PORT), nil)
 }
