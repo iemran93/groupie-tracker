@@ -186,6 +186,10 @@ nav ul li a:hover {
     text-decoration: none;
 }
 
+.results-s a h1 span {
+    text-decoration: underline;
+}
+
 .results-s a h1:hover {
     background-color: lightgreen;
 }
