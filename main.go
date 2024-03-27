@@ -7,13 +7,12 @@ import (
 	"groupieFunc/pkg/functions"
 	"groupieFunc/pkg/handlers"
 	"net/http"
-	"os"
 )
 
 // Global variables
 var GROUPIE_API = "https://groupietrackers.herokuapp.com/api"
 var GROUPIE_LOCATIONS_API = "https://groupietrackers.herokuapp.com/api/locations"
-var PORT = os.Getenv("PORT")
+var PORT = "8000"
 
 func main() {
 	// Pull the response data
