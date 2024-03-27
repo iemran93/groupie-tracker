@@ -6,9 +6,11 @@ import (
 	"groupieFunc/pkg/config"
 	"groupieFunc/pkg/functions"
 	"html/template"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 var GOOGLE_API_KEY = "AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4"
@@ -75,16 +77,26 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 		urlLocations = append(urlLocations, location)
 	}
 
-	var coordinates [][2]float64
+	log.Println(urlLocations)
+	// Channel to receive coordinates from goroutines
+	coordChan := make(chan [2]float64, len(urlLocations))
+	var wg sync.WaitGroup
+
 	for _, urlLocation := range urlLocations {
-		geoURL := fmt.Sprintf("https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=%s", urlLocation, GOOGLE_API_KEY)
-		geoRes := functions.GetResponse(geoURL)
-		var result config.ResultG
-		json.Unmarshal(geoRes, &result)
-		latitude := result.Results[0].Geometry.Location.Lat
-		longitude := result.Results[0].Geometry.Location.Lng
-		latLong := [2]float64{latitude, longitude}
-		coordinates = append(coordinates, latLong)
+		wg.Add(1)
+		go fetchCoordinates(urlLocation, &wg, coordChan)
+	}
+
+	// Wait for all goroutines to finish
+	go func() {
+		wg.Wait()
+		close(coordChan)
+	}()
+
+	// Receive coordinates from channel
+	var coordinates [][2]float64
+	for coord := range coordChan {
+		coordinates = append(coordinates, coord)
 	}
 
 	artistInfo.Coordinates = coordinates
@@ -131,6 +143,27 @@ func ResultsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	t.Execute(w, result)
+}
+
+func fetchCoordinates(urlLocation string, wg *sync.WaitGroup, coordChan chan<- [2]float64) {
+	defer wg.Done()
+
+	geoURL := fmt.Sprintf("https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=%s", urlLocation, GOOGLE_API_KEY)
+
+	geoRes := functions.GetResponse(geoURL)
+
+	var result config.ResultG
+	err := json.Unmarshal(geoRes, &result)
+	if err != nil {
+		log.Fatal("Error unmarshalling JSON:", err)
+	}
+
+	if len(result.Results) > 0 {
+		latitude := result.Results[0].Geometry.Location.Lat
+		longitude := result.Results[0].Geometry.Location.Lng
+		coord := [2]float64{latitude, longitude}
+		coordChan <- coord
+	}
 }
 
 func ErrorHandler(w http.ResponseWriter, r *http.Request, status int) {
