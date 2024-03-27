@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Search Results</title>
+</head>
+
+<body>
+    <div>
+        {{template "nav" .}}
+    </div>
+
+    <div class="header">
+        <h1>Groupie Tracker</h1>
+        <br>
+        <h1 style="font-size: 22px; font-style: italic; color: rgb(94, 103, 92)">Search Results</h1>
+    </div>
+
+    <div class="flexbox-container-3">
+        {{ range .Artist }}
+        <div class="flexbox-container-3-item">
+            <a href="/artist?id={{.Link}}">
+                <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+            </a>
+        </div>
+        {{ end }}
+        {{ range .Band }}
+        <div class="flexbox-container-3-item">
+            <a href="/artist?id={{.Link}}">
+                <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+            </a>
+        </div>
+        {{ end }}
+        {{ range .Member }}
+        <div class="flexbox-container-3-item">
+            <a href="/artist?id={{.Link}}">
+                <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+            </a>
+        </div>
+        {{ end }}
+        {{ range .EDate }}
+        <div class="flexbox-container-3-item">
+            <a href="/artist?id={{.Link}}">
+                <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+            </a>
+        </div>
+        {{ end }}
+        {{ range .FDate }}
+        <div class="flexbox-container-3-item">
+            <a href="/artist?id={{.Link}}">
+                <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+            </a>
+        </div>
+        {{ end }}
+        {{ range .Concert }}
+        <div class="flexbox-container-3-item">
+            <a href="/artist?id={{.Link}}">
+                <h1>{{.Param}}, <span>{{.Type}}</span></h1>
+            </a>
+        </div>
+        {{ end }}
+    </div>
+</body>
+
+</html>

@@ -19,10 +19,10 @@
     </div>
 
     <div class="search">
-        <div>
-            <input class="myInput icon" type="text" placeholder="Search" name="q" hx-get="/search"
+        <form action="/results" method="get" autocomplete="off">
+            <input required class="myInput icon" type="text" placeholder="Search" name="q" hx-get="/search"
                 hx-trigger="keyup changed delay=500ms" hx-target="#results">
-        </div>
+        </form>
         <div id="results">
             <!-- search results search.html-->
         </div>

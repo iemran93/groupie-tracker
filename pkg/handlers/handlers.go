@@ -114,6 +114,25 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, result)
 }
 
+func ResultsHandler(w http.ResponseWriter, r *http.Request) {
+	// Get the query serach data
+	searchParam := r.URL.Query().Get("q")
+
+	// Filter the artist based on the search param
+	var result config.Result
+	if len(searchParam) >= 1 {
+		result = functions.GetResult(artists, concerts, searchParam)
+	}
+
+	t, err := template.ParseFiles("./static/templates/results.html", "./static/templates/base.html")
+	if err != nil {
+		ErrorHandler(w, r, http.StatusInternalServerError)
+		return
+	}
+
+	t.Execute(w, result)
+}
+
 func ErrorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {

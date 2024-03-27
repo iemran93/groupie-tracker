@@ -39,6 +39,7 @@ func main() {
 	http.HandleFunc("/", handlers.Handler)
 	http.HandleFunc("/artist", handlers.ArtistHandler)
 	http.HandleFunc("/search", handlers.SearchHandler)
+	http.HandleFunc("/results", handlers.ResultsHandler)
 
 	// Serve static files
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
