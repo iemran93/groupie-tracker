@@ -1,18 +1,24 @@
 # Groupie Trackers
 
+![My Skills](https://skillicons.dev/icons?i=go,html,css,htmx,js)
+
 ## About
 Groupie Trackers is a web application that allows users to explore information about artists, locations, dates, and relations related to music events. It fetches data from an API and presents it in a user-friendly manner.
 
 ## Features
-- View a list of artists and their details
-- Explore locations and their associations with artists
-- Access information about specific dates and events
+- View a list of artists and their details.
+- Explore locations and their associations with artists.
+- Access information about specific dates and events.
+- Search the database by artist/band, member, concert or date.
+- GeoMap in the artist page showing the locations of the concerts.
 
 ## Technologies Used
 - Go: Go is the programming language used for the backend server.
 - HTML/CSS: HTML and CSS are used for frontend web page rendering.
 - HTTP: The application interacts with the API using HTTP requests.
 - Templates: HTML templates are used to render the fetched data.
+- HTMX: Used to view(render) the search results in the html template.
+- JS: Javascript to render the google map api and adds the markers.
 
 ## Setup
 1. Clone the repository:
