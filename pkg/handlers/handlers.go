@@ -77,7 +77,6 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 		urlLocations = append(urlLocations, location)
 	}
 
-	log.Println(urlLocations)
 	// Channel to receive coordinates from goroutines
 	coordChan := make(chan [2]float64, len(urlLocations))
 	var wg sync.WaitGroup
@@ -88,10 +87,8 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Wait for all goroutines to finish
-	go func() {
-		wg.Wait()
-		close(coordChan)
-	}()
+	wg.Wait()
+	close(coordChan)
 
 	// Receive coordinates from channel
 	var coordinates [][2]float64
