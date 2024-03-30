@@ -23,10 +23,10 @@ Groupie Trackers is a web application that allows users to explore information a
 
 ## Setup
 1. Clone the repository:
-   git clone https://learn.reboot01.com/git/emarei/groupie-tracker
+   git clone https://learn.reboot01.com/git/oabdulra/groupie-tracker-geolocalization
 
 2. Change to the project directory:
-   cd groupie-trackers
+   cd groupie-trackers-geolocalization
 
 3. Run the application:
    ```go
