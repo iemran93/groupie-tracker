@@ -77,10 +77,29 @@
             );
             var coordinatesStr = "{{.Coordinates}}"
             coordinates = parseCoordinates(coordinatesStr)
+
+            // Create an empty array to hold the marker objects
+            var markers = [];
+
+            // Create the markers and add them to the map
             for (i = 0; i < coordinates.length; i++) {
                 let marker = new google.maps.Marker(
                     { position: new google.maps.LatLng(coordinates[i][0], coordinates[i][1]), map: map }
                 );
+                markers.push(marker);
+            }
+
+            // Draw lines between markers
+            if (markers.length > 1) {
+                var pathCoordinates = markers.map(marker => marker.getPosition());
+                var line = new google.maps.Polyline({
+                    path: pathCoordinates,
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.2,
+                    strokeWeight: 1
+                });
+                line.setMap(map);
             }
         }
 
@@ -109,8 +128,8 @@
 
     <!-- Loading the Maps JavaScript API -->
     <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4&loading=async&callback=initMap">
-        </script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4&callback=initMap">
+    </script>
 </body>
 
 </html>
