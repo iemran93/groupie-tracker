@@ -18,7 +18,8 @@ Groupie Trackers is a web application that allows users to explore information a
 - HTTP: The application interacts with the API using HTTP requests.
 - Templates: HTML templates are used to render the fetched data.
 - HTMX: Used to view(render) the search results in the html template.
-- JS: Javascript to render the google map api and adds the markers.
+- Google maps API : used the API to get the geolocation and the map
+- JS: Javascript to render the google map api and adds the markers based on the geolocation.
 
 ## Setup
 1. Clone the repository:
