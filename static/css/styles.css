@@ -45,17 +45,16 @@ body {
 nav ul {
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 15px;
     background: #85b090;
     overflow: hidden;
 }
 
 nav ul li {
-    float: left;
+    display: inline;
 }
 
 nav ul li a {
-    display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
@@ -233,6 +232,11 @@ nav ul li a:hover {
 
 .results-s a {
     text-decoration: none;
+}
+
+.swal2-title {
+    font-size: 1.4rem;
+    font-style: italic;
 }
 
 /* media */

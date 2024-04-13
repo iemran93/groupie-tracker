@@ -1,0 +1,9 @@
+{{range .}}
+<div class="flexbox-item">
+    <p class="title">{{ .Name }}</p>
+    <a href="/artist?id={{ .Id }}"><img src="{{ .Image }}"></a>
+    <p class="title title1">Established: {{ .CrDate }}</p>
+    <p class="title title1">First Album: {{ .FstAlbum }}</p>
+    <br><br>
+</div>
+{{ end }}

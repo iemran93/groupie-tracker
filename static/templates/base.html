@@ -3,7 +3,31 @@
     <ul>
         <li>
             <a href="/">Home</a>
+            <a href="javascript:void(0)" id="about">About</a>
         </li>
     </ul>
 </nav>
+
+<!-- js import -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- js script -->
+<script>
+    let attention = prompt()
+    let about = document.getElementById("about")
+    about.addEventListener("click", function () {
+        attention.about()
+    })
+
+    // js module
+    function prompt() {
+        let about = function () {
+            let msg = `Groupie Trackers consists on receiving a given API and manipulate the data contained in it, in order to create a site, displaying the information.`
+            Swal.fire(msg);
+        }
+        return {
+            about: about,
+        }
+    }
+</script>
 {{end}}

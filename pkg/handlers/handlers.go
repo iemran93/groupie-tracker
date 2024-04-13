@@ -25,10 +25,17 @@ func SetData(ar *[]config.Artist, co *config.Concerts) {
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	// Parse home HTML
-	t, err := template.ParseFiles("./static/templates/home.html", "./static/templates/base.html")
+	t, err := template.ParseFiles("./static/templates/home.html", "./static/templates/artists.html", "./static/templates/base.html")
 	if err != nil {
 		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
+	}
+
+	// Get the query
+	nOfMembers := r.URL.Query().Get("nofmembers")
+	say := r.URL.Query().Get("say")
+	if nOfMembers != "" || say != "" {
+		artists = functions.GetFilter(artists)
 	}
 
 	// Serve and Execute HTML
@@ -140,6 +147,14 @@ func ResultsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	t.Execute(w, result)
+}
+
+func FilterHandler(w http.ResponseWriter, r *http.Request) {
+	selected := r.FormValue("nofmembers")
+	text := r.FormValue("say")
+	t, _ := template.ParseFiles("./static/templates/artists.html")
+	t.Execute(w, artists)
+	log.Println(selected, text)
 }
 
 func fetchCoordinates(urlLocation string, wg *sync.WaitGroup, coordChan chan<- [2]float64) {

@@ -33,13 +33,14 @@ func main() {
 	handlers.SetData(&artists, &concerts)
 
 	// Hello msg
-	fmt.Printf("\nHi, go to http://localhost:8000/ %s to view the site!\n", PORT)
+	fmt.Printf("\nHi, go to http://localhost:%s/ to view the site!\n", PORT)
 
 	// Handlers
 	http.HandleFunc("/", handlers.Handler)
 	http.HandleFunc("/artist", handlers.ArtistHandler)
 	http.HandleFunc("/search", handlers.SearchHandler)
 	http.HandleFunc("/results", handlers.ResultsHandler)
+	http.HandleFunc("/filter", handlers.FilterHandler)
 
 	// Serve static files
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
