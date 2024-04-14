@@ -31,13 +31,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Get the query
-	nOfMembers := r.URL.Query().Get("nofmembers")
-	say := r.URL.Query().Get("say")
-	if nOfMembers != "" || say != "" {
-		artists = functions.GetFilter(artists)
-	}
-
 	// Serve and Execute HTML
 	if r.URL.Path == "/style.css" {
 		http.ServeFile(w, r, "./static/css/styles.css")
@@ -150,11 +143,24 @@ func ResultsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func FilterHandler(w http.ResponseWriter, r *http.Request) {
-	selected := r.FormValue("nofmembers")
-	text := r.FormValue("say")
-	t, _ := template.ParseFiles("./static/templates/artists.html")
-	t.Execute(w, artists)
-	log.Println(selected, text)
+	if r.Method == "POST" {
+		//Get the form values
+		filterParam := map[string]string{}
+		r.ParseForm()
+		for key, value := range r.Form {
+			if len(value) > 0 && value[0] != "" {
+				filterParam[key] = value[0]
+			}
+		}
+		log.Println(filterParam, r.Form)
+
+		//Get the filtered result
+		result := functions.GetFilter(artists, filterParam)
+
+		//Parse the template and executed with the filtered result
+		t, _ := template.ParseFiles("./static/templates/artists.html")
+		t.Execute(w, result)
+	}
 }
 
 func fetchCoordinates(urlLocation string, wg *sync.WaitGroup, coordChan chan<- [2]float64) {
