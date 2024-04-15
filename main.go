@@ -25,12 +25,15 @@ func main() {
 	artistRes := functions.GetResponse(response.Artists)
 	json.Unmarshal([]byte(artistRes), &artists)
 
-	// Pull locations(concerts)
+	// Pull Concerts
 	var concerts config.Concerts
 	concertRes := functions.GetResponse(GROUPIE_LOCATIONS_API)
 	json.Unmarshal(concertRes, &concerts)
 
-	handlers.SetData(&artists, &concerts)
+	// Pull Locations
+	locations := functions.GetLocations(concerts)
+
+	handlers.SetData(&artists, &concerts, &locations)
 
 	// Hello msg
 	fmt.Printf("\nHi, go to http://localhost:%s/ to view the site!\n", PORT)

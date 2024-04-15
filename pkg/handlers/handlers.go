@@ -16,11 +16,19 @@ import (
 var GOOGLE_API_KEY = "AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4"
 var artists []config.Artist
 var concerts config.Concerts
+var locations map[string][]string
 
 // Set the variables(artists, concerts) from the main
-func SetData(ar *[]config.Artist, co *config.Concerts) {
+func SetData(ar *[]config.Artist, co *config.Concerts, loc *map[string][]string) {
 	artists = *ar
 	concerts = *co
+	locations = *loc
+}
+
+// PageData
+type PageData struct {
+	Artists   []config.Artist
+	Locations []string
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -31,6 +39,16 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Combine the locations to serve it(execute)
+	cLocations := []string{}
+	for _, v := range locations {
+		cLocations = append(cLocations, v...)
+	}
+	pageData := PageData{
+		Artists:   artists,
+		Locations: cLocations,
+	}
+
 	// Serve and Execute HTML
 	if r.URL.Path == "/style.css" {
 		http.ServeFile(w, r, "./static/css/styles.css")
@@ -39,7 +57,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		ErrorHandler(w, r, http.StatusNotFound)
 		return
 	} else {
-		t.Execute(w, artists)
+		t.Execute(w, pageData)
 	}
 }
 

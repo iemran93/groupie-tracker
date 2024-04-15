@@ -12,7 +12,7 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 
 	result := []config.Artist{}
 	for _, artist := range artists {
-		nOfMmbers_pass := true
+		nOfMembers_pass := true
 		crDateStart_pass := true
 		crDateLast_pass := true
 		fstAlbumStart_pass := true
@@ -22,7 +22,7 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 		if nOfMembersStr, ok := filterPram["nofmembers"]; ok {
 			nOfMembers, _ := strconv.Atoi(nOfMembersStr)
 			if len(artist.Members) != nOfMembers {
-				nOfMmbers_pass = false
+				nOfMembers_pass = false
 			}
 		}
 
@@ -41,9 +41,9 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 		}
 
 		//Filter First Album Date
+		artistFstAlbum, _ := strconv.Atoi(strings.Split(artist.FstAlbum, "-")[2])
 		if fstAlbumStartStr, ok := filterPram["fstAlbumStart"]; ok {
 			fstAlbumStart, _ := strconv.Atoi(fstAlbumStartStr)
-			artistFstAlbum, _ := strconv.Atoi(strings.Split(artist.FstAlbum, "-")[2])
 			log.Println(artistFstAlbum)
 			if artistFstAlbum < fstAlbumStart {
 				crDateStart_pass = false
@@ -51,13 +51,12 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 		}
 		if fstAlbumLastStr, ok := filterPram["fstAlbumLast"]; ok {
 			fstAlbumLast, _ := strconv.Atoi(fstAlbumLastStr)
-			artistFstAlbum, _ := strconv.Atoi(strings.Split(artist.FstAlbum, "-")[2])
 			if artistFstAlbum > fstAlbumLast {
 				crDateStart_pass = false
 			}
 		}
 
-		if nOfMmbers_pass && crDateStart_pass && crDateLast_pass && fstAlbumStart_pass && fstAlbumLast_pass {
+		if nOfMembers_pass && crDateStart_pass && crDateLast_pass && fstAlbumStart_pass && fstAlbumLast_pass {
 			result = append(result, artist)
 		}
 	}

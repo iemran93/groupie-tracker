@@ -45,13 +45,20 @@
             <br>
             <input type="text" name="fstAlbumStart" id="fstAlbumStart" placeholder="Start fstAlbum">
             <input type="text" name="fstAlbumLast" id="fstAlbumLast" placeholder="Last fstAlbum">
+            <br>
+            <label for="locations">Choose a concert location:</label>
+            <select name="locations" id="locations" size="7">
+                {{range .Locations}}
+                <option>{{.}}</option>
+                {{end}}
+            </select>
             <button type="submit">Filter</button>
             <button type="reset">Clear</button>
         </form>
     </div>
 
     <div id="artists" class="flexbox-container">
-        {{range .}}
+        {{range .Artists}}
         <div class="flexbox-item">
             <p class="title">{{ .Name }}</p>
             <a href="/artist?id={{ .Id }}"><img src="{{ .Image }}"></a>
