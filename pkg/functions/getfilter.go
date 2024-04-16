@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+var concerts config.Concerts
+
+func SetConcerts(conc *config.Concerts) {
+	concerts = *conc
+}
+
 func GetFilter(artists []config.Artist, filterPram map[string]string) []config.Artist {
 	log.Println("start filtering")
 
@@ -17,8 +23,9 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 		crDateLast_pass := true
 		fstAlbumStart_pass := true
 		fstAlbumLast_pass := true
+		location_pass := true
 
-		//Filter numbers of membres
+		//Filter by numbers of membres
 		if nOfMembersStr, ok := filterPram["nofmembers"]; ok {
 			nOfMembers, _ := strconv.Atoi(nOfMembersStr)
 			if len(artist.Members) != nOfMembers {
@@ -26,7 +33,7 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 			}
 		}
 
-		//Filter Creation Date
+		//Filter by Creation Date
 		if crDateStartStr, ok := filterPram["crDateStart"]; ok {
 			crDateStart, _ := strconv.Atoi(crDateStartStr)
 			if artist.CrDate < crDateStart {
@@ -40,7 +47,7 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 			}
 		}
 
-		//Filter First Album Date
+		//Filter by First Album Date
 		artistFstAlbum, _ := strconv.Atoi(strings.Split(artist.FstAlbum, "-")[2])
 		if fstAlbumStartStr, ok := filterPram["fstAlbumStart"]; ok {
 			fstAlbumStart, _ := strconv.Atoi(fstAlbumStartStr)
@@ -56,7 +63,21 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 			}
 		}
 
-		if nOfMembers_pass && crDateStart_pass && crDateLast_pass && fstAlbumStart_pass && fstAlbumLast_pass {
+		//Filter by location
+		if location, ok := filterPram["locations"]; ok {
+			found := false
+			for _, loc := range concerts.Index[artist.Id-1].Locations {
+				if location == loc {
+					found = true
+					break
+				}
+			}
+			if !found {
+				location_pass = false
+			}
+		}
+
+		if nOfMembers_pass && crDateStart_pass && crDateLast_pass && fstAlbumStart_pass && fstAlbumLast_pass && location_pass {
 			result = append(result, artist)
 		}
 	}

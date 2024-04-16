@@ -33,7 +33,10 @@ func main() {
 	// Pull Locations
 	locations := functions.GetLocations(concerts)
 
+	// Set the handlers(home page) data
 	handlers.SetData(&artists, &concerts, &locations)
+	// Set the GetFilter data
+	functions.SetConcerts(&concerts)
 
 	// Hello msg
 	fmt.Printf("\nHi, go to http://localhost:%s/ to view the site!\n", PORT)

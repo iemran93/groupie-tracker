@@ -16,10 +16,10 @@ import (
 var GOOGLE_API_KEY = "AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4"
 var artists []config.Artist
 var concerts config.Concerts
-var locations map[string][]string
+var locations []string
 
 // Set the variables(artists, concerts) from the main
-func SetData(ar *[]config.Artist, co *config.Concerts, loc *map[string][]string) {
+func SetData(ar *[]config.Artist, co *config.Concerts, loc *[]string) {
 	artists = *ar
 	concerts = *co
 	locations = *loc
@@ -39,14 +39,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Combine the locations to serve it(execute)
-	cLocations := []string{}
-	for _, v := range locations {
-		cLocations = append(cLocations, v...)
-	}
+	// Prepare the pagedata
 	pageData := PageData{
 		Artists:   artists,
-		Locations: cLocations,
+		Locations: locations,
 	}
 
 	// Serve and Execute HTML

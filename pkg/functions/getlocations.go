@@ -2,11 +2,10 @@ package functions
 
 import (
 	"groupieFunc/pkg/config"
-	"log"
 	"strings"
 )
 
-func GetLocations(concerts config.Concerts) map[string][]string {
+func GetLocations(concerts config.Concerts) []string {
 	locationsMap := map[string][]string{}
 	locationsSet := map[string]bool{}
 	for _, concert := range concerts.Index {
@@ -19,6 +18,9 @@ func GetLocations(concerts config.Concerts) map[string][]string {
 			}
 		}
 	}
-	log.Println(locationsMap)
-	return locationsMap
+	locations := []string{}
+	for _, v := range locationsMap {
+		locations = append(locations, v...)
+	}
+	return locations
 }
