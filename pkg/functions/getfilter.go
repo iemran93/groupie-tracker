@@ -27,8 +27,16 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 
 		//Filter by numbers of membres
 		if nOfMembersStr, ok := filterPram["nofmembers"]; ok {
-			nOfMembers, _ := strconv.Atoi(nOfMembersStr)
-			if len(artist.Members) != nOfMembers {
+			nOfMembersItms := strings.Split(nOfMembersStr, ",")
+			found := false
+			for _, nOfMembers := range nOfMembersItms[:len(nOfMembersItms)-1] {
+				nOfMembers, _ := strconv.Atoi(nOfMembers)
+				if len(artist.Members) == nOfMembers {
+					found = true
+					break
+				}
+			}
+			if !found {
 				nOfMembers_pass = false
 			}
 		}
@@ -51,7 +59,6 @@ func GetFilter(artists []config.Artist, filterPram map[string]string) []config.A
 		artistFstAlbum, _ := strconv.Atoi(strings.Split(artist.FstAlbum, "-")[2])
 		if fstAlbumStartStr, ok := filterPram["fstAlbumStart"]; ok {
 			fstAlbumStart, _ := strconv.Atoi(fstAlbumStartStr)
-			log.Println(artistFstAlbum)
 			if artistFstAlbum < fstAlbumStart {
 				crDateStart_pass = false
 			}

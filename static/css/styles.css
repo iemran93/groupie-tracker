@@ -239,6 +239,27 @@ nav ul li a:hover {
     font-style: italic;
 }
 
+/* form */
+
+.filter-container {
+    border: 3px solid #a8dfb7;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 800px;
+}
+
+.filter-item {
+    margin-bottom: 10px;
+}
+
+.filter-buttons {
+    margin-top: 10px;
+}
+
 /* media */
 
 @media screen and (max-width: 580px) {

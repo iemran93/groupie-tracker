@@ -162,8 +162,18 @@ func FilterHandler(w http.ResponseWriter, r *http.Request) {
 		filterParam := map[string]string{}
 		r.ParseForm()
 		for key, value := range r.Form {
-			if len(value) > 0 && value[0] != "" {
-				filterParam[key] = value[0]
+			if key[0] == 'n' {
+				filterParam["nofmembers"] += value[0] + ","
+			} else if len(value) > 0 && value[0] != "" {
+				if key == "crDate" {
+					filterParam["crDateStart"] = value[0][:4]
+					filterParam["crDateLast"] = value[0][5:9]
+				} else if key == "fstAlbumDate" {
+					filterParam["fstAlbumStart"] = value[0][:4]
+					filterParam["fstAlbumLast"] = value[0][5:9]
+				} else {
+					filterParam[key] = value[0]
+				}
 			}
 		}
 		log.Println(filterParam, r.Form)

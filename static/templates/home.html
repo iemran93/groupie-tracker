@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/styles.css" rel="stylesheet">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+    <!--Plugin CSS file with desired skin-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+
+    <!--jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!--Plugin JavaScript file-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+
     <title>Home Page</title>
 </head>
 
@@ -32,34 +43,50 @@
 
 
     <!-- Filter -->
-    <div>
-        <form hx-post="/filter" hx-target="#artists">
-            <input type="radio" name="nofmembers" id="n1" value="1">
-            <label for="n1">1 member</label>
-            <br>
-            <input type="radio" name="nofmembers" id="n2" value="2">
-            <label for="n2">2 members</label>
-            <br>
-            <input type="radio" name="nofmembers" id="n3" value="3">
-            <label for="n3">3 members</label>
-            <br>
-            <input type="radio" name="nofmembers" id="n4" value="4">
-            <label for="n4">4 members</label>
-            <br>
-            <input type="text" name="crDateStart" id="crDateStart" placeholder="Start CrDate">
-            <input type="text" name="crDateLast" id="crDateLast" placeholder="Last CrDate">
-            <br>
-            <input type="text" name="fstAlbumStart" id="fstAlbumStart" placeholder="Start fstAlbum">
-            <input type="text" name="fstAlbumLast" id="fstAlbumLast" placeholder="Last fstAlbum">
-            <br>
-            <label for="locations">Choose a concert location:</label>
-            <select name="locations" id="locations" size="7">
-                {{range .Locations}}
-                <option>{{.}}</option>
-                {{end}}
-            </select>
-            <button type="submit">Filter</button>
-            <button type="reset">Clear</button>
+    <div class="filter-container">
+        <form id="filterForm" hx-post="/filter" hx-target="#artists">
+            <div class="filter-item">
+                <h3>Number of Members:</h3>
+                <input type="checkbox" name="n1" id="n1" value="1">
+                <label for="n1">1 member</label>
+                <input type="checkbox" name="n2" id="n2" value="2">
+                <label for="n2">2 members</label>
+                <input type="checkbox" name="n3" id="n3" value="3">
+                <label for="n3">3 members</label>
+                <input type="checkbox" name="n4" id="n4" value="4">
+                <label for="n4">4 members</label>
+                <input type="checkbox" name="n5" id="n5" value="5">
+                <label for="n5">5 members</label>
+                <input type="checkbox" name="n6" id="n6" value="6">
+                <label for="n6">6 members</label>
+                <input type="checkbox" name="n7" id="n7" value="7">
+                <label for="n7">7 members</label>
+            </div>
+            <div class="filter-item">
+                <h3>Creation Date:</h3>
+                <input type="text" id="crDate" name="crDate" value="">
+                <!-- <input type="text" name="crDateStart" id="crDateStart" placeholder="Start CrDate"> -->
+                <!-- <input type="text" name="crDateLast" id="crDateLast" placeholder="Last CrDate"> -->
+            </div>
+            <div class="filter-item">
+                <h3>First Album Date:</h3>
+                <input type="text" id="fstAlbumDate" name="fstAlbumDate" value="">
+                <!-- <input type="text" name="fstAlbumStart" id="fstAlbumStart" placeholder="Start fstAlbum"> -->
+                <!-- <input type="text" name="fstAlbumLast" id="fstAlbumLast" placeholder="Last fstAlbum"> -->
+            </div>
+            <div class="filter-item">
+                <h3>Concert Location:</h3>
+                <select name="locations" id="locations">
+                    <option value="">Choose a concert location</option>
+                    {{range .Locations}}
+                    <option value="{{.}}">{{.}}</option>
+                    {{end}}
+                </select>
+            </div>
+            <div class="filter-buttons">
+                <button type="submit">Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
         </form>
     </div>
 
@@ -74,6 +101,44 @@
         </div>
         {{ end }}
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#crDate").ionRangeSlider({
+                type: "double",
+                skin: "round",
+                min: 1900,
+                max: 2024,
+                from: 1910,
+                to: 2020
+            });
+
+            $("#fstAlbumDate").ionRangeSlider({
+                type: "double",
+                skin: "round",
+                min: 1900,
+                max: 2024,
+                from: 1910,
+                to: 2020
+            });
+        });
+
+        function clearForm() {
+            // Reset the checkboxes
+            document.getElementById("filterForm").reset();
+
+            // Reset the range sliders
+            $("#crDate").data("ionRangeSlider").update({
+                from: 1910,
+                to: 2020
+            });
+
+            $("#fstAlbumDate").data("ionRangeSlider").update({
+                from: 1910,
+                to: 2020
+            });
+        }
+    </script>
 </body>
 
 </html>
