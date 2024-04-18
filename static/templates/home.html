@@ -27,23 +27,25 @@
 
     <div class="header">
         <h1>Groupie Tracker</h1>
-    </div>
 
+        <div class="options">
+            <button id="filter-toggle" type="button" onclick="toggleFilter()">Filter</button>
 
-    <!-- Search -->
-    <div class="search">
-        <form action="/results" method="get" autocomplete="off">
-            <input required class="myInput icon" type="text" placeholder="Search" name="q" hx-get="/search"
-                hx-trigger="keyup changed delay=500ms" hx-target="#results">
-        </form>
-        <div id="results">
-            <!-- search results search.html-->
+            <!-- Search -->
+            <div class="search">
+                <form action="/results" method="get" autocomplete="off">
+                    <input required class="myInput icon" type="text" placeholder="Search" name="q" hx-get="/search"
+                        hx-trigger="keyup changed delay=500ms" hx-target="#results">
+                </form>
+                <div id="results">
+                    <!-- search results search.html-->
+                </div>
+            </div>
         </div>
     </div>
 
-
     <!-- Filter -->
-    <div class="filter-container">
+    <div id="filterContainter" class="filter-container" style="display: none;">
         <form id="filterForm" hx-post="/filter" hx-target="#artists">
             <div class="filter-item">
                 <h3>Number of Members:</h3>
@@ -137,6 +139,15 @@
                 from: 1910,
                 to: 2020
             });
+        }
+
+        function toggleFilter() {
+            var filterItems = document.getElementById("filterContainter");
+            if (filterItems.style.display === "none") {
+                filterItems.style.display = "flex";
+            } else {
+                filterItems.style.display = "none";
+            }
         }
     </script>
 </body>

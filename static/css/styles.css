@@ -181,6 +181,7 @@ nav ul li a:hover {
 }
 
 .myInput {
+    font-family: "Poppins", sans-serif;
     font-size: 1rem;
     border-radius: 10px;
     width: 300px;
@@ -246,7 +247,6 @@ nav ul li a:hover {
     border-radius: 5px;
     padding: 20px;
     margin: 20px auto;
-    display: flex;
     align-items: center;
     justify-content: center;
     max-width: 800px;
@@ -259,6 +259,34 @@ nav ul li a:hover {
 .filter-buttons {
     margin-top: 10px;
 }
+
+.options {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#filter-toggle {
+    font-family: "Poppins", sans-serif;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    height: 35px;
+    width: 60px;
+    padding: 5px;
+    background-color: #c3f0cf;
+}
+
+#filter-toggle:hover {
+    background-color: #d7f7df;
+}
+
+#filter-toggle:active {
+    transform: translateY(4px);
+}
+
 
 /* media */
 
