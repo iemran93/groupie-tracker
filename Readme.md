@@ -5,7 +5,7 @@
 ## About
 Groupie Trackers is a web application that allows users to explore information about artists, locations, dates, and relations related to music events. It fetches data from an API and presents it in a user-friendly manner.
 
-<img src="readmesrc\main page.jpg" width=550px>
+<img src="readmesrc\main page.jpg" width=700px>
 
 ## Features
 - View a list of artists and their details.
