@@ -13,7 +13,7 @@ import (
 	"sync"
 )
 
-var GOOGLE_API_KEY = "AIzaSyDc34KbLF2AwVSxNoADZD7rIDChtwaNe_4"
+var GOOGLE_API_KEY = "GOOGLE_API_KEY"
 var artists []config.Artist
 var concerts config.Concerts
 var locations []string

@@ -1,5 +1,0 @@
-- Customization: allow users to filter by multiple criteria simultaneously.
-- Clear Labels: Clearly label each filtering option so users understand what criteria they are selecting. 
-- Reset Option: Include a "Reset Filters" button or option to allow users to easily revert to the default view
-if they want to start over or remove all filters.
-- range filter enables users to define both a minimum and maximum value for a range.
